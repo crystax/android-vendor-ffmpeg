@@ -4931,6 +4931,8 @@ EOF
         eval ${pfx}libc_type=klibc
     elif check_${pfx}cpp_condition sys/cdefs.h "defined __BIONIC__"; then
         eval ${pfx}libc_type=bionic
+    elif check_${pfx}cpp_condition sys/cdefs.h "defined __LIBCRYSTAX__"; then
+        eval ${pfx}libc_type=crystax
     elif check_${pfx}cpp_condition sys/brand.h "defined LABELED_BRAND_NAME"; then
         eval ${pfx}libc_type=solaris
         add_${pfx}cppflags -D__EXTENSIONS__ -D_XOPEN_SOURCE=600

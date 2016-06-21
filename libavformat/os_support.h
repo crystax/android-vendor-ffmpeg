@@ -61,10 +61,12 @@
 #  if HAVE_UNISTD_H
 #    include <unistd.h>
 #  endif
+#ifndef __LIBCRYSTAX__
 #  ifdef lseek
 #   undef lseek
 #  endif
 #  define lseek(f,p,w) lseek64((f), (p), (w))
+#endif
 #endif
 
 static inline int is_dos_path(const char *path)
