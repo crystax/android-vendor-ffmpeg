@@ -103,11 +103,11 @@ case $ABI in
         ARCHFLAGS=""
 esac
 
-case $ABI in
-    armeabi*)
-        ARCHFLAGS="$ARCHFLAGS -mthumb"
-        ;;
-esac
+#case $ABI in
+#    armeabi*)
+#        ARCHFLAGS="$ARCHFLAGS -mthumb"
+#        ;;
+#esac
 
 LFLAGS=""
 case $ABI in
