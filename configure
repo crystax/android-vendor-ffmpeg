@@ -4354,6 +4354,12 @@ elif enabled mips; then
                     ;;
                 esac
             ;;
+            mips32r6)
+                enable mips32r6
+            ;;
+            mips64r6)
+                enable mips64r6
+            ;;
             *)
                 # Unknown CPU. Disable everything.
                 warn "unknown CPU. Disabling all MIPS optimizations."
