@@ -34,7 +34,24 @@ endef
 
 define target-arch
 $(strip $(or \
+    $(if $(filter armeabi%,$(1)),arm),\
     $(if $(filter arm64-v8a,$(1)),aarch64),\
+    $(if $(filter mips,$(1)),mipsel),\
+    $(if $(filter mips64,$(1)),mips64el),\
+    $(if $(filter x86,$(1)),x86),\
+    $(if $(filter x86_64,$(1)),x86_64),\
+    $(error Unsupported ABI: '$(1)')\
+))
+endef
+
+define target-cpu
+$(strip $(or \
+    $(if $(filter armeabi,$(1)),armv5te),\
+    $(if $(filter armeabi-v7a%,$(1)),armv7-a),\
+    $(if $(filter arm64-v8a,$(1)),armv8-a),\
+    $(if $(filter x86 x86_64,$(1)),atom),\
+    $(if $(filter mips,$(1)),mips32r6),\
+    $(if $(filter mips64,$(1)),mips64r6),\
     $(error Unsupported ABI: '$(1)')\
 ))
 endef
@@ -69,13 +86,19 @@ build:
 			--prefix=$(call install-dir,$(ABI)) \
 			--enable-cross-compile \
 			--arch=$(call target-arch,$(ABI)) \
+			--cpu=$(call target-cpu,$(ABI)) \
 			--target-os=android \
-			--cross-prefix=$$TARGET- \
+			--cross-prefix=$${TARGET}- \
 			--enable-pic \
 			--disable-doc \
 			--disable-symver \
+			--disable-yasm \
 			--enable-static \
 			--enable-shared \
+			$(if $(filter armeabi,$(ABI)),\
+				--disable-vfp \
+				--disable-neon \
+			)\
 			&& \
 		make -j && \
 		make install && \
