@@ -99,6 +99,8 @@ build:
 				--disable-vfp \
 				--disable-neon \
 			)\
+			--enable-gpl \
+			--enable-libx264 \
 			&& \
 		make -j && \
 		make install && \

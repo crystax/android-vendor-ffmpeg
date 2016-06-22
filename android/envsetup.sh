@@ -152,10 +152,16 @@ rsync -a --delete $NDK/platforms/android-${APILEVEL}/arch-${ARCH}/ $SYSROOT/ || 
 find $SYSROOT/ -name 'libcrystax.*' -delete
 cp -f $NDK/sources/crystax/libs/$ABI/libcrystax.so $SYSROOT/$SYSROOT_LIBDIR/ || return 1
 
-LIBPNG_VERSION=$(ls -1 $NDK/sources/libpng | sort -n | tail -n 1)
-if [ -n "$LIBPNG_VERSION" ]; then
-    rsync -a $NDK/sources/libpng/$LIBPNG_VERSION/include/ $SYSROOT/include/ || return 1
-    rsync -a $NDK/sources/libpng/$LIBPNG_VERSION/libs/$ABI/ $SYSROOT/$SYSROOT_LIBDIR/ || return 1
+#LIBPNG_VERSION=$(ls -1 $NDK/sources/libpng | sort -n | tail -n 1)
+#if [ -n "$LIBPNG_VERSION" ]; then
+#    rsync -a $NDK/sources/libpng/$LIBPNG_VERSION/include/ $SYSROOT/usr/include/ || return 1
+#    rsync -a $NDK/sources/libpng/$LIBPNG_VERSION/libs/$ABI/ $SYSROOT/$SYSROOT_LIBDIR/ || return 1
+#fi
+
+X264_VERSION=$(ls -1 $NDK/packages/x264 | sort -n | tail -n 1)
+if [ -n "$X264_VERSION" ]; then
+    rsync -a $NDK/packages/x264/$X264_VERSION/$ABI/include/ $SYSROOT/usr/include/ || return 1
+    rsync -a $NDK/packages/x264/$X264_VERSION/$ABI/lib/ $SYSROOT/$SYSROOT_LIBDIR/ || return 1
 fi
 
 {
